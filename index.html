@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PANDAVGK - Maintenance</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Nama Web */
+        .header {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+        }
+
+        .web-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Card Tunggal */
+        .glass-table {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 550px;
+            animation: fadeInUp 1s ease-out;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .table-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #ff4d4d; /* Warna peringatan/info */
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 77, 77, 0.3);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .table-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+        }
+
+        .timer-highlight {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #00c6ff;
+            display: block;
+            margin-top: 15px;
+        }
+
+        /* Animasi Loader */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: #00c6ff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header { width: 100%; text-align: center; left: 0; }
+            .glass-table { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1 class="web-name">PANDAVGK</h1>
+    </header>
+
+    <div class="glass-table">
+        <h2 class="table-title">Pemberitahuan Sistem</h2>
+        <div class="table-text">
+            MAAF VIDEO INI SEDANG MENGUPLOAD DI KARENA KAN WEB INI MASIH BARU DAN OTOMATIS AKAN DI PINDAH KAN KE WEB PERTAMA SETELAH:
+            <span class="timer-highlight"><span id="main-timer">15</span> DETIK</span>
+        </div>
+        <div class="loader"></div>
+        <p style="font-size: 0.8rem; color: #888;">Mohon tunggu, jangan tutup halaman ini.</p>
+    </div>
+
+    <script>
+        let timeLeft = 15;
+        const timerDisplay = document.getElementById('main-timer');
+        
+        // GANTI LINK DI BAWAH INI
+        const redirectURL = "https://google.com"; 
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerDisplay.innerText = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                window.location.href = redirectURL;
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
