@@ -3,144 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PANDAVGK - Maintenance</title>
+    <title>Pemberitahuan Sistem - RezFullWeb</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+        :root {
+            --bg-dark: #06070a;
+            --card-bg: rgba(15, 18, 28, 0.75);
+            --warning-color: #f59e0b; /* Kuning/Oranye Peringatan */
+            --warning-glow: rgba(245, 158, 11, 0.25);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             min-height: 100vh;
-            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
             overflow: hidden;
+            background: radial-gradient(circle at center, #151a29 0%, #06070a 75%);
+            padding: 20px;
         }
 
-        /* Nama Web */
-        .header {
-            position: absolute;
-            top: 30px;
-            left: 40px;
-        }
-
-        .web-name {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            background: linear-gradient(to right, #00c6ff, #0072ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Card Tunggal */
-        .glass-table {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            width: 100%;
+        /* Kotak Notifikasi Utama */
+        .notification-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(245, 158, 11, 0.15);
             max-width: 550px;
-            animation: fadeInUp 1s ease-out;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            border-radius: 28px;
+            padding: 40px 30px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(245, 158, 11, 0.05);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInCard 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .table-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #ff4d4d; /* Warna peringatan/info */
-            margin-bottom: 20px;
-            border-bottom: 2px solid rgba(255, 77, 77, 0.3);
-            padding-bottom: 10px;
-            text-transform: uppercase;
+        @keyframes fadeInCard {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        .table-text {
-            font-size: 1.05rem;
+        /* Garis Aksen Berkedip Lemas di Atas Kartu */
+        .notification-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--warning-color), transparent);
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Animasi Logo Peringatan Bergerak Layout (Float & Scale) */
+        .warning-icon-wrapper {
+            width: 100px;
+            height: 100px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 2px dashed rgba(245, 158, 11, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px auto;
+            box-shadow: 0 0 20px var(--warning-glow);
+            animation: layoutFloat 4s ease-in-out infinite;
+        }
+
+        .warning-icon-wrapper i {
+            font-size: 3rem;
+            color: var(--warning-color);
+            text-shadow: 0 0 15px var(--warning-glow);
+        }
+
+        @keyframes layoutFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.03); border-color: var(--warning-color); }
+        }
+
+        /* Konten Teks */
+        .noti-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+            color: #fff;
+        }
+
+        .noti-desc {
+            font-size: 0.98rem;
+            color: var(--text-muted);
             line-height: 1.6;
-            color: #e0e0e0;
+            margin-bottom: 35px;
+        }
+
+        .highlight-name {
+            color: var(--warning-color);
+            font-weight: 600;
+        }
+
+        /* Tombol Aksi Kembali / Refresh dengan Animasi Klik */
+        .action-btn {
+            background: linear-gradient(135deg, var(--warning-color), #d97706);
+            color: #000;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-decoration: none;
             margin-bottom: 30px;
         }
 
-        .timer-highlight {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #00c6ff;
-            display: block;
-            margin-top: 15px;
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+            filter: brightness(1.1);
         }
 
-        /* Animasi Loader */
-        .loader {
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-left-color: #00c6ff;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
+        .action-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.2);
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        /* Area Timer Live */
+        .timer-container {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 25px;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .timer-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
-        @media (max-width: 768px) {
-            .header { width: 100%; text-align: center; left: 0; }
-            .glass-table { padding: 25px; }
+        /* Format Tampilan Jam:Menit:Detik */
+        .timer-display {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            background: linear-gradient(to right, #fff, var(--warning-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: monospace; /* Agar digit angka stabil tidak goyang saat berganti */
         }
     </style>
 </head>
 <body>
 
-    <header class="header">
-        <h1 class="web-name">PANDAVGK</h1>
-    </header>
-
-    <div class="glass-table">
-        <h2 class="table-title">Pemberitahuan Sistem</h2>
-        <div class="table-text">
-            MAAF VIDEO INI SEDANG MENGUPLOAD DI KARENA KAN WEB INI MASIH BARU DAN OTOMATIS AKAN DI PINDAH KAN KE WEB PERTAMA SETELAH:
-            <span class="timer-highlight"><span id="main-timer">15</span> DETIK</span>
+    <div class="notification-card">
+        <!-- Logo Peringatan Bergerak Layout -->
+        <div class="warning-icon-wrapper">
+            <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
-        <div class="loader"></div>
-        <p style="font-size: 0.8rem; color: #888;">Mohon tunggu, jangan tutup halaman ini.</p>
+
+        <!-- Teks Informasi -->
+        <h2 class="noti-title">Fitur Belum Tersedia</h2>
+        <p class="noti-desc">
+            Maaf, fitur web ini belum tersedia dikarenakan <span class="highlight-name">Reza</span> sedang mencari ide buat versi terbaru. Lagian ini cuma bercanda kok, santai aja kali ya!
+        </p>
+
+        <!-- Tombol Kembali -->
+        <a href="#" onclick="history.back(); return false;" class="action-btn">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Halaman Utama
+        </a>
+
+        <!-- Live Timer Status -->
+        <div class="timer-container">
+            <div class="timer-label">Waktu Sinkronisasi Selesai</div>
+            <div class="timer-display" id="live-timer">59:87:02</div>
+        </div>
     </div>
 
     <script>
-        let timeLeft = 15;
-        const timerDisplay = document.getElementById('main-timer');
-        
-        // GANTI LINK DI BAWAH INI
-        const redirectURL = "https://pandavgk-website-resmi-9bph.vercel.app/"; 
+        // Set durasi awal dalam satuan detik jika belum pernah tersimpan di lokal
+        // Format 59:87:02 (Jika dihitung murni dalam total detik untuk simulasi countdown)
+        const TOTAL_SECONDES_INIT = (59 * 3600) + (87 * 60) + 2; 
 
-        const countdown = setInterval(() => {
-            timeLeft--;
-            timerDisplay.innerText = timeLeft;
+        let timeRemaining;
 
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                window.location.href = redirectURL;
+        // Mengecek apakah target waktu berakhir sudah terdaftar di Local Storage
+        if (localStorage.getItem("timer_end_target")) {
+            const targetTime = parseInt(localStorage.getItem("timer_end_target"), 10);
+            const currentTime = Math.floor(Date.now() / 1000);
+            timeRemaining = targetTime - currentTime;
+
+            if (timeRemaining <= 0) {
+                // Jika waktu habis saat di-refresh, reset ulang lagi demi kelangsungan demo live
+                resetTimerTracker();
             }
-        }, 1000);
-    </script>
+        } else {
+            resetTimerTracker();
+        }
 
+        function resetTimerTracker() {
+            const now = Math.floor(Date.now() / 1000);
+            const target = now + TOTAL_SECONDES_INIT;
+            localStorage.setItem("timer_end_target", target.toString());
+            timeRemaining = TOTAL_SECONDES_INIT;
+        }
+
+        // Fungsi memperbarui tampilan angka counter secara berkala
+        function updateTimerDisplay() {
+            if (timeRemaining <= 0) {
+                document.getElementById("live-timer").textContent = "00:00:00";
+                return;
+            }
+
+            // Rumus konversi sisa detik ke struktur Jam : Menit : Detik
+            let hours = Math.floor(timeRemaining / 3600);
+            let minutes = Math.floor((timeRemaining % 3600) / 60);
+            let seconds = timeRemaining % 60;
+
+            // Memastikan format selalu dua digit (contoh: 09 bukan 9)
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            document.getElementById("live-timer").textContent = `${hours}:${minutes}:${seconds}`;
+            
+            timeRemaining--;
+        }
+
+        // Jalankan update fungsi setiap 1 detik secara interval berkelanjutan
+        updateTimerDisplay();
+        setInterval(updateTimerDisplay, 1000);
+    </script>
 </body>
 </html>
